@@ -1,0 +1,1 @@
+Please install Playwright Test via running `npm i --save-dev @playwright/test`
