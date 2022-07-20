@@ -1,0 +1,20 @@
+{
+    "name": "automation-appium",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "test": "mocha"
+    },
+    "keywords": [],
+    "author": "lucas <lucas@mail.com>",
+    "license": "ISC",
+    "dependencies": {
+        "webdriverio": "^7.20.7"
+    },
+    "devDependencies": {
+        "mocha": "^10.0.0",
+        "ts-node-dev": "^2.0.0"
+    }
+}
