@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <link rel="stylesheet" href="./public/style.css">
+
+    <main id="canvas"></main>
+    
+    <script>
+      // Preparação
+      const $canvas = document.getElementById('canvas');
+      let users = [];
+    //   let user = undefined;
+    
+      // Renderizando Usuários
+      function renderUsers() {
+        $canvas.innerHTML = `
+          ${users.map((user) => {
+        //   const user = users[userId]
+          console.log({user});
+          return `
+              <div class="player" style="top: ${user.y || 0}px; left: ${user.x || 0}px;">${user.id}</div>
+            `;
+        }).join('')}
+        `;
+      }
+      // Load do Jogo [MANUAL]
+    //   users = [
+    //     { id: "lucas5" },
+    //   ]
+      renderUsers();
+    </script>
+    <!-- <script src="http://localhost:8000/socket.io/socket.io.js"></script> -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io()
+
+        socket.on('connect', () => {
+            user = {id:socket.id}
+            users.push(user)
+            console.log({users, user})
+            renderUsers()
+
+        })
+
+        window.addEventListener('keydown', event => {
+            const moves = {
+                ArrowUp: {x: 0, y: -10},
+                ArrowDown: {x:0, y: 10},
+                ArrowLeft: {x:-10, y: 0},
+                ArrowRight: {x: 10, y: 0},
+            }
+            
+            const move = moves[event.key]
+            console.log(move)
+
+            if(move) socket.emit('ON_USER_MOVE', {id: socket.id, move})
+        })
+
+        socket.emit('ON_USERS_UPDATE', (updatedUsers) => {
+            console.log
+            users = JSON.parse(updatedUsers)
+            renderUsers()
+        })
+
+    </script>
+</body>
+</html>
